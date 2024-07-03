@@ -15,9 +15,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <SmoothScroller />
-        <Header />
         <Suspense>
+          <SmoothScroller />
+          <Header />
           {children}
         </Suspense>
       </body>

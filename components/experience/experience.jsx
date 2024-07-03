@@ -1,5 +1,6 @@
 import { Poppins, IBM_Plex_Mono } from "next/font/google";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
@@ -22,14 +23,14 @@ const experiences = [
     title: "ryanvu.ca",
     date: "Jan 2019 - Current",
     description: "Design & Web Development",
-    src: "/experience/ryanvu.png",
+    src: "/icons/ryanvu-logo.svg",
     location: "Anywhere",
   },
 ];
 
 export const Experience = () => {
   return (
-    <section className="h-[50vh] flex flex-col w-full relative p-4 border-t-[1px] border-black">
+    <section className="h-screen flex flex-col w-full relative p-4 border-t-[1px] border-black">
       <div className="grid grid-rows-3 absolute top-0 left-0 h-full w-full">
         {experiences.map((experience, index) => {
           return (
@@ -37,7 +38,7 @@ export const Experience = () => {
               {
                 experience.isTitle ?
                   <h1 className="text-[8vw] px-4" style={ibm.style}>Work</h1> :
-                  <Card title={experience.title} date={experience.date} description={experience.description} location={experience.location} />
+                  <Card title={experience.title} src={experience.src} date={experience.date} description={experience.description} location={experience.location} />
               }
             </Div>
           )
@@ -69,9 +70,10 @@ const Div = ({ children, index }) => {
 const Card = ({ title, date, description, src, location }) => {
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col m-4 border-black border-[1px]">
+
       <div
-        className="flex items-center gap-2 p-2 uppercase border-b-[1px] border-black bg-black text-white"
+        className="flex items-center gap-2 p-2 uppercase bg-black text-white"
         style={ibm.style}
       >
         <motion.div
@@ -86,11 +88,18 @@ const Card = ({ title, date, description, src, location }) => {
         ></motion.div>
         <span>{date}</span>
       </div>
-      <h2 className={`${poppins.className} text-4xl md:text-6xl p-2 py-4`}>{title}</h2>
+
+      <div className="flex justify-between items-center">
+        <h2 className={`${poppins.className} flex-grow text-4xl md:text-6xl pl-4`}>{title}</h2>
+        <div className="relative w-32 h-32 flex">
+          <Image src={src} alt={title} fill className="object-contain p-4" />
+        </div>
+      </div>
+
       <div className="flex border-t-[1px] border-black justify-between text-xs p-2">
         <span>{description}</span>
         <span>{location}</span>
       </div>
-    </div>
+    </div >
   );
 };

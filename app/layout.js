@@ -2,6 +2,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/header";
 import SmoothScroller from "@/components/Lenis";
+import { Suspense } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <SmoothScroller />
         <Header />
-        {children}
+        <Suspense>
+          {children}
+        </Suspense>
       </body>
     </html>
   );

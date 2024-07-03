@@ -17,17 +17,121 @@
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--foreground-rgb));
+  color: rgb(var(--background-start-rgb));
+  /* background: linear-gradient( */
+  /*     to bottom, */
+  /*     transparent, */
+  /*     rgb(var(--background-end-rgb)) */
+  /*   ) */
+  /*   rgb(var(--background-start-rgb)); */
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+
+.burger {
+  width: 22px;
+}
+
+.burger::after,
+.burger::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(var(--background-start-rgb));
+  position: relative;
+  transition: all 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.burger::before {
+  top: -4px;
+}
+
+.burger::after {
+  top: 4px;
+  transition: width 0.3s ease-in-out;
+}
+
+.menu:hover .burger::after {
+  width: 70%;
+  transition: all 0.3s ease-in-out;
+}
+
+.menu:hover .burger::before {
+  width: 70%;
+  transition: all 0.3s ease-in-out;
+}
+
+.burgerActive::after {
+  top: -1px;
+  transform: rotate(45deg);
+}
+
+.burgerActive::before {
+  top: 1px;
+  transform: rotate(-45deg);
+}
+
+.burger-open {
+  width: 22px;
+}
+
+.burger-open::after,
+.burger-open::before {
+  content: '';
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: rgb(var(--background-start-rgb));
+  position: relative;
+  transition: all 1s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.burger-open::before {
+  top: 0px;
+}
+
+.burger-open::after {
+  top: -2px;
+}
+
+.sliderContainer {
+  /* position: absolute; */
+  height: 96px;
+  /* top: calc(100vh - 120px); */
+}
+
+.slider {
+  position: relative;
+  white-space: nowrap;
+}
+
+.slider p {
+  position: relative;
+  margin: 0px;
+  font-size: 5vw;
+  font-weight: 500;
+  padding-right: 2rem;
+  white-space: nowrap;
+}
+
+.slider p:nth-of-type(2) {
+  position: absolute;
+  right: -100%;
+  top: 0;
+}
+.content {
+  overflow: hidden
+}
+
+.content::before {
+  overflow: hidden;
+  content: "";
+  height: 96px;
 }

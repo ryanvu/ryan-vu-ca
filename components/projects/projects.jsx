@@ -23,7 +23,7 @@ export const Projects = () => {
       {/* <div className="h-96"> */}
       {/*   <h1>meal.</h1> */}
       {/* </div> */}
-      <h1 className="text-[4vw] leading-10 ml-auto">Projects</h1>
+      <h1 className="text-[4vw] leading-10 ml-auto uppercase" style={ ibm.style }>Projects</h1>
       <div className="flex gap-4">
         <div className="hidden lg:flex h-[60vh] w-[40vw] border-black border-[1px]"></div>
         <div className="flex flex-col flex-grow">

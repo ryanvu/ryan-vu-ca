@@ -35,6 +35,7 @@ export const Experience = () => {
       <div className="grid grid-rows-3 p-4 gap-4 lg:grid-cols-3 lg:grid-rows-none lg:p-8 lg:gap-12 absolute top-0 left-0 h-full w-full">
         {experiences.map((experience, index) => {
           return (
+            experience.isTitle ? <h1 className="text-[4vw] leading-[3vw] uppercase" style={ ibm.style }>{experience.title}</h1> :
             <Div index={index + 1} key={index}>
               <GridCard title={experience.title} date={experience.date} description={experience.description} location={experience.location} index={index} src={experience.src} />
             </Div>
@@ -45,20 +46,19 @@ export const Experience = () => {
   );
 };
 
-const GridCard = ({ title, date, description, location, index, src, x }) => {
+const GridCard = ({ title, date, description, location, index, src }) => {
   return (
     <div className="relative text-[3vw] h-full w-full flex flex-row-reverse justify-between items-center lg:flex-col lg:items-start" style={poppins.style}>
       <div className="flex flex-col text-right text-[2vw] flex-grow lg:text-lg lg:text-left">
-        <span style={ibm.style}>{date || <br />}</span>
-        <span>{description || <br />}</span>
+        <span style={ibm.style}>{date}</span>
+        <span>{description}</span>
+        <span className="text-sm opacity-80" style={ ibm.style }>{location}</span>
       </div>
 
       <div className="flex w-full justify-between items-end">
         <div className="flex flex-col leading-[3vw] lg:mt-auto">
-          {
-            index > 0 && <span>0{index}</span>
-          }
-          <span>{title || <br />}</span>
+          <span>0{index}</span>
+          <span>{title}</span>
         </div>
         { src && 
           <div className="hidden lg:block relative h-full w-[8vw]">

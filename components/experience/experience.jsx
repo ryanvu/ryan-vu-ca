@@ -31,7 +31,7 @@ const experiences = [
 export const Experience = () => {
   return (
 
-    <section className="h-[50vh] flex flex-col w-full relative p-4">
+    <section className="h-[50vh] flex flex-col w-full relative p-4 my-20">
       <div className="grid grid-rows-3 p-4 gap-4 lg:grid-cols-3 lg:grid-rows-none lg:p-8 lg:gap-12 absolute top-0 left-0 h-full w-full">
         {experiences.map((experience, index) => {
           return (
@@ -45,16 +45,19 @@ export const Experience = () => {
   );
 };
 
-const GridCard = ({ title, date, description, location, index, src }) => {
+const GridCard = ({ title, date, description, location, index, src, x }) => {
   return (
     <div className="relative text-[3vw] h-full w-full flex flex-row-reverse justify-between items-center lg:flex-col lg:items-start" style={poppins.style}>
       <div className="flex flex-col text-right text-[2vw] flex-grow lg:text-lg lg:text-left">
         <span style={ibm.style}>{date || <br />}</span>
         <span>{description || <br />}</span>
       </div>
+
       <div className="flex w-full justify-between items-end">
         <div className="flex flex-col leading-[3vw] lg:mt-auto">
-          <span>0{index}</span>
+          {
+            index > 0 && <span>0{index}</span>
+          }
           <span>{title || <br />}</span>
         </div>
         { src && 

@@ -9,7 +9,6 @@ import { Titles } from './titles';
 
 const links = [
   { link: "Home", href: "/" },
-  { link: "Work", href: "/work" },
   { link: "Photos", href: "/photos" },
   { link: "About", href: "/about" },
 ]

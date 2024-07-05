@@ -97,7 +97,7 @@ export default function Home() {
       </section>
 
       <Experience />
-      {/* <Projects /> */}
+      <Projects />
     </main>
   );
 }

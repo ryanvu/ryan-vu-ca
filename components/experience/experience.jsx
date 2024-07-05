@@ -30,16 +30,13 @@ const experiences = [
 
 export const Experience = () => {
   return (
-    <section className="h-screen flex flex-col w-full relative p-4 border-t-[1px] border-black">
-      <div className="grid grid-rows-3 absolute top-0 left-0 h-full w-full">
+
+    <section className="h-[50vh] flex flex-col w-full relative p-4">
+      <div className="grid grid-rows-3 p-4 gap-4 lg:grid-cols-3 lg:grid-rows-none lg:p-8 lg:gap-12 absolute top-0 left-0 h-full w-full">
         {experiences.map((experience, index) => {
           return (
             <Div index={index + 1} key={index}>
-              {
-                experience.isTitle ?
-                  <h1 className="text-[8vw] px-4" style={ibm.style}>Work</h1> :
-                  <Card title={experience.title} src={experience.src} date={experience.date} description={experience.description} location={experience.location} />
-              }
+              <GridCard title={experience.title} date={experience.date} description={experience.description} location={experience.location} index={index} src={experience.src} />
             </Div>
           )
         })}
@@ -48,11 +45,47 @@ export const Experience = () => {
   );
 };
 
+const GridCard = ({ title, date, description, location, index, src }) => {
+  return (
+    <div className="relative text-[3vw] h-full w-full flex flex-row-reverse justify-between items-center lg:flex-col lg:items-start" style={poppins.style}>
+      <div className="flex flex-col text-right text-[2vw] flex-grow lg:text-lg lg:text-left">
+        <span style={ibm.style}>{date || <br />}</span>
+        <span>{description || <br />}</span>
+      </div>
+      <div className="flex w-full justify-between items-end">
+        <div className="flex flex-col leading-[3vw] lg:mt-auto">
+          <span>0{index}</span>
+          <span>{title || <br />}</span>
+        </div>
+        { src && 
+          <div className="hidden lg:block relative h-full w-[8vw]">
+            <Image src={src} fill className="object-contain" alt={title} />
+          </div>
+        }
+      </div>
+    </div>
+  )
+};
+
+// const Cubes = () => {
+//   return (
+//     <div className="absolute top-0 right-4 w-5 grid gap-1 grid-cols-2 grid-rows-2">
+//       <div className="h-2 w-2 bg-black"></div>
+//       <div className="h-2 w-2 bg-black"></div>
+//       <div className="h-2 w-2 bg-black"></div>
+//       <div className="h-2 w-2 bg-black"></div>
+//     </div>
+//   )
+// }
+
+
 const Div = ({ children, index }) => {
   const anim = {
-    initial: { opacity: 0, x: "-100%" },
-    animate: (i) => ({ opacity: 1, x: "0%", transition: { duration: 1, delay: 0.5 * i } }),
+    initial: { opacity: 0, y: "50%" },
+    animate: (i) => ({ opacity: 1, y: "0%", transition: { duration: 1, delay: 0.5 * i } }),
   };
+
+  const className = "flex flex-col overflow-hidden border-black h-full";
 
   return (
     <motion.div
@@ -60,46 +93,10 @@ const Div = ({ children, index }) => {
       custom={index}
       initial="initial"
       animate="animate"
-      className="flex flex-col overflow-hidden justify-center border-black h-full"
+      className={className}
     >
       {children}
     </motion.div>
   )
 }
 
-const Card = ({ title, date, description, src, location }) => {
-
-  return (
-    <div className="flex flex-col m-4 border-black border-[1px]">
-
-      <div
-        className="flex items-center gap-2 p-2 uppercase bg-black text-white"
-        style={ibm.style}
-      >
-        <motion.div
-          animate={{ rotate: [0, 360] }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatType: "mirror",
-            ease: "linear",
-          }}
-          className="h-2 w-2 bg-white rotate-45"
-        ></motion.div>
-        <span>{date}</span>
-      </div>
-
-      <div className="flex justify-between items-center">
-        <h2 className={`${poppins.className} flex-grow text-4xl md:text-6xl pl-4`}>{title}</h2>
-        <div className="relative w-32 h-32 flex">
-          <Image src={src} alt={title} fill className="object-contain p-4" />
-        </div>
-      </div>
-
-      <div className="flex border-t-[1px] border-black justify-between text-xs p-2">
-        <span>{description}</span>
-        <span>{location}</span>
-      </div>
-    </div >
-  );
-};

@@ -39,7 +39,7 @@ export default function Home() {
     <main className="flex flex-col items-center justify-center overflow-hidden relative">
       <section
         ref={container}
-        className="h-screen relative flex flex-col w-full  md:justify-center mt-16 overflow-hidden"
+        className="h-screen relative flex flex-col w-full md:justify-center mt-16 overflow-hidden"
       >
         <div className="flex md:justify-center w-full sm:p-1 md:p-16 flex-grow">
           <div className="flex flex-col justify-between w-5/6 gap-4  h-4/5 p-8">

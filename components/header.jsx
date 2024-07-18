@@ -1,27 +1,43 @@
 "use client";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn, height, opacity, slide } from './animations';
-import { Poppins, IBM_Plex_Mono } from 'next/font/google';
+import { IBM_Plex_Mono } from 'next/font/google';
 import { Titles } from './titles';
 
 const links = [
-  { link: "Home", href: "/" },
-  { link: "Photos", href: "/photos" },
-  { link: "About", href: "/about" },
+  { link: "Home", href: "/", available: true },
+  { link: "Photos", href: "/photos", available: false },
+  { link: "About", href: "/about", available: false },
 ]
 
 const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "700"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
 
 export const Header = () => {
-
   const [isOpen, setIsOpen] = useState(false);
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [pendingHref, setPendingHref] = useState(null);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
+  };
+
+  const handleLinkClick = (href) => {
+    setIsAnimating(true);
+    setPendingHref(href);
+    setIsOpen(false);
+  };
+
+  const handleAnimationComplete = () => {
+    setIsAnimating(false);
+    if (pendingHref) {
+      router.push(pendingHref);
+      setPendingHref(null);
+    }
   };
 
   return (
@@ -38,16 +54,25 @@ export const Header = () => {
         </motion.div>
       </div>
 
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" onExitComplete={handleAnimationComplete}>
         {isOpen &&
           <motion.nav className="flex flex-row p-4 justify-between absolute overflow-hidden bg-white text-black w-full" variants={height} initial="initial" animate="enter" exit="exit">
             <ul className="flex flex-col">
               {
-                links.map(({ link, href }, index) => (
+                links.map(({ link, href, available }, index) => (
                   <motion.li key={index} custom={index} variants={slide} initial="initial" animate="enter" exit="exit" whileHover={{ x: "2vw", scale: 1.2, transition: { duration: 0.7 } }} className="text-[5vw]">
-                    <Link href={href}>
-                      {link}
-                    </Link>
+                    {available ?
+                      <a
+                        href={href}
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handleLinkClick(href);
+                        }}
+                      >
+                        {link}
+                      </a> :
+                      <h3 className="opacity-50">{link} <span className="text-lg">(Coming soon)</span></h3>
+                    }
                   </motion.li>
                 ))
               }

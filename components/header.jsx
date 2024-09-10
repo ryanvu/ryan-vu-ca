@@ -2,7 +2,6 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fadeIn, height, opacity, slide } from './animations';
 import { IBM_Plex_Mono } from 'next/font/google';
@@ -10,7 +9,7 @@ import { Titles } from './titles';
 
 const links = [
   { link: "Home", href: "/", available: true },
-  { link: "Photos", href: "/photos", available: false },
+  { link: "Photos", href: "/photos", available: true },
   { link: "About", href: "/about", available: false },
 ]
 
@@ -33,11 +32,12 @@ export const Header = () => {
   };
 
   const handleAnimationComplete = () => {
-    setIsAnimating(false);
     if (pendingHref) {
       router.push(pendingHref);
       setPendingHref(null);
     }
+
+    setIsAnimating(false);
   };
 
   return (

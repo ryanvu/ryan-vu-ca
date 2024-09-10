@@ -35,7 +35,7 @@ export const Experience = () => {
       <div className="grid grid-rows-3 p-4 gap-4 lg:grid-cols-3 lg:grid-rows-none lg:p-8 lg:gap-12 absolute top-0 left-0 h-full w-full">
         {experiences.map((experience, index) => {
           return (
-            experience.isTitle ? <h1 className="text-[4vw] leading-[3vw] uppercase" style={ ibm.style }>{experience.title}</h1> :
+            experience.isTitle ? <h1 key={index} className="text-[4vw] leading-[3vw] uppercase" style={ ibm.style }>{experience.title}</h1> :
             <Div index={index + 1} key={index}>
               <GridCard title={experience.title} date={experience.date} description={experience.description} location={experience.location} index={index} src={experience.src} />
             </Div>

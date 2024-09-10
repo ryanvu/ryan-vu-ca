@@ -6,10 +6,7 @@ import { IBM_Plex_Mono, Poppins } from "next/font/google";
 import {
   motion,
   AnimatePresence,
-  useScroll,
-  useTransform,
 } from "framer-motion";
-import { InfiniteText } from "@/components/infinite-text";
 import { Experience } from "@/components/experience/experience";
 import { fadedTitles, homeImages } from "@/components/animations";
 import { Projects } from "@/components/projects/projects";
@@ -42,7 +39,7 @@ export default function Home() {
         className="h-screen relative flex flex-col w-full md:justify-center mt-16 overflow-hidden"
       >
         <div className="flex md:justify-center w-full sm:p-1 md:p-16 flex-grow">
-          <div className="flex flex-col justify-between w-5/6 gap-4  h-4/5 p-8">
+          <div className="flex flex-col justify-between w-5/6 gap-4 h-4/5 p-8">
             <div className="flex flex-col gap-2">
               {titles.map(({ title }, index) => {
                 return (

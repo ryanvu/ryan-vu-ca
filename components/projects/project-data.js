@@ -7,7 +7,8 @@ export const projects = [
       { src: '/images/projects/meal/meal-1.png', alt: 'Meal Logo' },
       { src: '/images/projects/meal/meal-2.png', alt: 'Meal Landing Page' },
       { src: '/images/projects/meal/meal-3.png', alt: 'Meal Screenshot' }
-    ]
+    ],
+    link: 'https://github.com/ryanvu/feed_me'
   },
   {
     title: "Capital Golf Exchange",
@@ -18,7 +19,8 @@ export const projects = [
       { src: '/images/projects/cge/cge-1.png', alt: 'CGE Logo' },
       { src: '/images/projects/cge/cge-2.png', alt: 'CGE Landing Page' },
       { src: '/images/projects/cge/cge-3.png', alt: 'CGE Landing Page 2' }
-    ]
+    ],
+    link: 'https://www.capitalgolfexchange.com/'
   },
   {
     title: "Natalie Mitchell Music",
@@ -29,7 +31,8 @@ export const projects = [
       { src: '/images/projects/natmusic/natmusic-1.png', alt: 'Opening Landing Page Natalie Music' },
       { src: '/images/projects/natmusic/natmusic-2.png', alt: 'Home Page Natalie Music' },
       { src: '/images/projects/natmusic/natmusic-3.png', alt: 'Natalie Music - Mobile Contact' }
-    ]
+    ],
+    link: 'https://nat-mitchell.netlify.app/'
   },
   // {
   //   title: "Learn Kanji",
@@ -44,6 +47,7 @@ export const projects = [
     imgs: [
       { src: '/images/projects/deluxe/deluxe-1.png', alt: 'Deluxe Time Logo' },
       { src: '/images/projects/deluxe/deluxe-2.png', alt: 'Deluxe Time HomePage' }
-    ]
+    ],
+    link: 'https://www.deluxetime.ca/'
   },
 ];

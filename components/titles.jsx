@@ -16,7 +16,7 @@ export const Titles = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % titles.length);
-    }, 2000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [titles.length]);
   return (

@@ -1,21 +1,17 @@
 "use client";
-import Image from "next/image";
 
-import { useState, useRef, useEffect } from "react";
-import { IBM_Plex_Mono, Poppins } from "next/font/google";
-import {
-  motion,
-  AnimatePresence,
-  useScroll,
-  useTransform,
-} from "framer-motion";
-import { InfiniteText } from "@/components/infinite-text";
+// import { useState, useRef, useEffect } from "react";
+import { IBM_Plex_Mono, Poppins, Work_Sans } from "next/font/google";
+// import { InfiniteText } from "@/components/infinite-text";
 import { Experience } from "@/components/experience/experience";
-import { fadedTitles, homeImages } from "@/components/animations";
+// import { fadedTitles, homeImages } from "@/components/animations";
 import { Projects } from "@/components/projects/projects";
+import {  motion, useScroll, useTransform } from "framer-motion";
+import { useRef } from "react";
 
 const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"] });
-const poppins = Poppins({ subsets: ["latin"], weight: ["400", "700"] });
+
+// const work = Work_Sans({ subsets: ["latin"], weight: ["400", "500"] });
 
 const titles = [
   { title: "Ryan Vu", src: "/images/ryan-profile.jpg" },
@@ -24,80 +20,83 @@ const titles = [
 ];
 
 export default function Home() {
-  const container = useRef(null);
-  const [hovered, setHover] = useState(0);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setHover((prevHover) => (prevHover + 1) % titles.length);
-    }, 5000); // Change image every 5 seconds
-
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, []);
+  const targetRef = useRef();
+  const { scrollYProgress } = useScroll({ target: targetRef, offset: ['end end', 'end start'] });
+  const opacity = useTransform(scrollYProgress, [0.5, 1.0], ['95%', '30%']);
+  const clipLeft = useTransform(scrollYProgress,
+    [0.5, 1],
+    ['polygon(0% 0%, 50% 0%, 50% 100%, 0% 100%)', 'polygon(0% 0%, 0% 0%, 0% 100%, 0% 100%)']
+  );
+  const clipRight = useTransform(scrollYProgress,
+    [0.5, 1],
+    ['polygon(50% 0%, 100% 0%, 100% 100%, 50% 100%)', 'polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%)']
+  );
 
   return (
     <main className="flex flex-col items-center justify-center overflow-hidden relative">
-      <section
-        ref={container}
-        className="h-screen relative flex flex-col w-full md:justify-center mt-16 overflow-hidden"
-      >
-        <div className="flex md:justify-center w-full sm:p-1 md:p-16 flex-grow">
-          <div className="flex flex-col justify-between w-5/6 gap-4  h-4/5 p-8">
-            <div className="flex flex-col gap-2">
-              {titles.map(({ title }, index) => {
-                return (
-                  <AnimatePresence key={index} mode="wait">
-                    <motion.div
-                      key={index}
-                      style={poppins.style}
-                      variants={fadedTitles}
-                      initial="initial"
-                      animate={hovered === index ? "hovered" : "notHovered"}
-                      exit={hovered !== index ? "notHovered" : "hovered"}
-                      className={`z-30 ${hovered === 2 ? "text-black" : "text-white"} md:text-black w-1/3`}
-                    >
-                      <h1 className="text-4xl md:text-6xl lowercase">
-                        {title}
-                      </h1>
-                    </motion.div>
-                  </AnimatePresence>
-                );
-              })}
-            </div>
-
-            <div
-              className={`${ibm.className} z-30 ${hovered === 2 ? "text-black" : "text-white"} md:text-black w-1/2`}
-            >
-              <p>
-                Ryan is a software developer and photographer based in Toronto,
-                Canada.
-              </p>
-            </div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={hovered}
-                variants={homeImages}
-                initial="initial"
-                animate="enter"
-                exit="exit"
-                className="absolute right-0 top-0 h-screen w-full md:w-2/5 z-20"
-              >
-                <Image
-                  sizes={"(max-width: 1250px) 100vw, 1250px"}
-                  src={titles[hovered]?.src}
-                  fill
-                  className="object-cover"
-                  alt={titles[hovered]?.title}
-                ></Image>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-      </section>
-
+      <div className="relative h-[100vh] w-full">
+        <motion.div
+          className="absolute top-0 left-0 w-full h-full"
+          style={{
+            backgroundImage: `url(${titles[0].src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity,
+            filter: "grayscale(90%)",
+            clipPath: clipLeft
+          }}
+        />
+        <motion.div
+          className="absolute top-0 left-0 w-full h-full"
+          style={{
+            backgroundImage: `url(${titles[0].src})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity,
+            filter: "grayscale(90%)",
+            clipPath: clipRight
+          }}
+        />
+        <motion.section
+          ref={targetRef}
+          className="relative flex flex-col items-center justify-end h-full w-full md:justify-center"
+        >
+          <MainTitle title="ryan+vu creative developer"  scrollYProgress={scrollYProgress} />
+        </motion.section>
+      </div>
       <Experience />
       <Projects />
     </main>
   );
+}
+
+const MainTitle = ({ title, scrollYProgress }) => {
+
+  const textY  = useTransform(scrollYProgress, [0, .25], ['0%', '250%']);
+  const scale  = useTransform(scrollYProgress, [0.1, 0.4], ['100%', '20%']);
+  const width  = useTransform(scrollYProgress, [0.1, 0.4], ['100%', '0%']);
+ 
+
+  return (
+    <motion.div className="flex flex-col w-full justify-evenly md:items-center p-4 md:p-12 md:flex-row" style={{ ...ibm.style, scale, transformOrigin: 'center center', y: textY }}>
+      {title.split(" ").map((word, index, array) => {
+        return (
+          <motion.div
+            key={index}
+            className="flex items-center gap-8"
+          >
+            <motion.h1 className="text-[5vw] md:text-[4vw] uppercase text-white">{word}</motion.h1>
+            {index < array.length - 1 && (
+              <motion.span
+                className="hidden text-[5vw] md:text-[2vw] md:block text-white"
+                style={{ width }}
+              >───────</motion.span>
+            )}
+          </motion.div>
+        )
+      })}
+    </motion.div>
+
+  )
 }

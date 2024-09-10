@@ -2,8 +2,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import Link from 'next/link';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'framer-motion'
 import { fadeIn, height, opacity, slide } from './animations';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { Titles } from './titles';
@@ -40,9 +39,40 @@ export const Header = () => {
     }
   };
 
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
+  let scrollTimeout;
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+
+    if (latest > previous || latest < previous && latest > 100 || latest < 100) {
+      setHidden(true);
+      setScrolling(true);
+      clearTimeout(scrollTimeout);
+    } else {
+      setScrolling(true);
+      clearTimeout(scrollTimeout);
+    }
+
+    scrollTimeout = setTimeout(() => {
+      setScrolling(false);
+      setTimeout(() => {
+        if (!scrolling) {
+          setHidden(false);
+        }
+      }, 1000);
+    }, 100);
+  });
+
   return (
     <header className={`${ibm.className} flex flex-col fixed w-full z-50`}>
-      <div className="flex flex-row justify-between w-full p-4 mx-auto md:min-w-[768px] lg:min-w-[1080px]">
+      <motion.div
+        animate={{ y: hidden ? -100 : 0 }}
+        transition={{ duration: 0.3 }}
+        className="flex flex-row justify-between w-full p-4 mx-auto md:min-w-[768px] lg:min-w-[1080px]"
+      >
         <h1 className="text-2xl">RYAN VU</h1>
         <div className="hidden md:flex">
           <Titles />
@@ -52,7 +82,7 @@ export const Header = () => {
           <motion.p variants={opacity} animate={isOpen ? "closed" : "open"}>MENU</motion.p>
           <motion.p className="absolute right-0 opacity-0 text-black" variants={opacity} animate={!isOpen ? "closed" : "open"}>CLOSE</motion.p>
         </motion.div>
-      </div>
+      </motion.div>
 
       <AnimatePresence mode="wait" onExitComplete={handleAnimationComplete}>
         {isOpen &&

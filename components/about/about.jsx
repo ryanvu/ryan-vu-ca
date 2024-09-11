@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from 'react';
-import { motion, useTransform, useMotionValueEvent } from 'framer-motion';
+import { motion, useTransform, useMotionValueEvent, useInView } from 'framer-motion';
 import Image from 'next/image';
 import { useScrollBasedImage } from '@/hooks/image-hooks';
 import { IBM_Plex_Mono, Open_Sans } from 'next/font/google';
@@ -14,6 +14,33 @@ const titles = [
   { title: "Developer &", src: "/images/toronto.png" },
   { title: "Photographer", src: "https://i.imgur.com/YrVjYa3.jpg" },
 ];
+
+const aboutP2 = [
+  "I approach every aspect of life with the same dedication I bring to coding.",
+  "I'm pushing my limits in weight training and going on long runs, I'm always striving for progress.",
+  "This mentality carries over to my professional life, where each challenge is an opportunity to grow and excel.",
+  "Photography and graphic design challenge me to see the world differently, enhancing my creative problem-solving abilities.",
+  "It's not about being the best, but about giving my best in everything I do — a mindset that continually shapes me as a developer and as a person."
+];
+
+const Sentence = ({ children, index }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { margin: "-50% 0px -50% 0px" });
+
+
+  return (
+    <motion.div
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0.35, scale: 0.9 }} ref={ref} className="flex items-center gap-2 py-[5vh]">
+      <span style={ibm.style}>0{index + 1}</span>
+      <span>
+        ──────────────────
+      </span>
+      <span>
+        {children}
+      </span>
+    </motion.div>
+  );
+}
 
 const About = () => {
   const containerRef = useRef(null);
@@ -96,62 +123,19 @@ const About = () => {
         </div> {/* Spacer to align content with image */}
 
         <div className="p-8 font-semibold">
-          <h2 className="text-[2.5vw] text-pretty" style={open.style}>
+          <div className="text-[2.5vw] text-pretty" style={open.style}>
             Beyond the Code
             <div className="my-4"></div>
             Pursuing Growth in Every Aspect
-          </h2>
+          </div>
         </div>
 
         <div className="p-8">
-          <h2 className="flex flex-col gap-1 text-[3vw] md:text-base text-pretty w-full" style={open.style}>
-            <div className="flex items-center gap-2">
-              <span style={ ibm.style }>01</span>
-              <span>
-                ──────────────────
-              </span>
-              <span>
-                I approach every aspect of life with the same dedication I bring to coding.
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span style={ ibm.style }>02</span>
-              <span>
-                ────────────
-              </span>
-              <span className="relative top-[14px]">
-                I&apos;m pushing my limits in weight training and going on long runs, I&apos;m always striving for progress.
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span style={ ibm.style }>03</span>
-              <span>
-                ──────
-              </span>
-              <span className="relative top-[14px]">
-                This mentality carries over to my professional life, where each challenge is an opportunity to grow and excel.
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span style={ ibm.style }>04</span>
-              <span>
-                ───
-              </span>
-              <span className="relative top-[14px]">
-                Photography and graphic design challenge me to see the world differently, enhancing my creative problem-solving abilities.
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <span style={ ibm.style }>05</span>
-              <span>
-                ─
-              </span>
-              <span className="relative top-[14px]">
-            It&apos;s not about being the best, but about giving my best in everything I do — a mindset that continually shapes me as a developer and as a person.
-              </span>
-            </div>
-
-          </h2>
+          <div className="flex flex-col gap-1 text-[3vw] md:text-base text-pretty w-full" style={open.style}>
+            {
+              aboutP2.map((sentence, index) => <Sentence key={index} index={index}>{sentence}</Sentence>)
+            }
+          </div>
         </div>
 
       </div>

@@ -1,16 +1,13 @@
 "use client";
 
-import Image from "next/image";
-// import { useState, useRef, useEffect } from "react";
-import { IBM_Plex_Mono, Poppins, Work_Sans } from "next/font/google";
+import { IBM_Plex_Mono } from "next/font/google";
 import { Projects } from "@/components/projects/projects";
 import About from "@/components/about/about";
-import { motion, useScroll, useTransform, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 
 const ibm = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"] });
 
-// const work = Work_Sans({ subsets: ["latin"], weight: ["400", "500"] });
 
 const titles = [
   { title: "Ryan Vu", src: "/images/ryan-profile.jpg" },

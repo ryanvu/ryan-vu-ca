@@ -30,7 +30,9 @@ const Sentence = ({ children, index }) => {
 
   return (
     <motion.div
-      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0.35, scale: 0.9 }} ref={ref} className="flex items-center gap-2 py-[5vh]">
+      animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0.35, scale: 0.9 }} 
+      ref={ref} 
+      className="flex items-center gap-2 py-[5vh]">
       <span style={ibm.style}>0{index + 1}</span>
       <span>
         ──────────────────
